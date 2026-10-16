@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.turso
+*.sqlite
+*.sqlite-*
+upload-token.txt
+upload-host.txt
+turso-api-token.txt
+upload-result.txt
+render-api-key.txt
+ronaq-upload.sqlite*

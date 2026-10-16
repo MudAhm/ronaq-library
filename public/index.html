@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المكتبة الرونق</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ronaq.css">
+</head>
+<body>
+  <div class="library-backdrop" aria-hidden="true">
+    <div class="library-backdrop__slide library-backdrop__slide--shelf"></div>
+    <div class="library-backdrop__slide library-backdrop__slide--desk"></div>
+    <div class="library-backdrop__glow"></div>
+    <div class="library-backdrop__pattern"></div>
+    <div class="library-backdrop__veil"></div>
+  </div>
+
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <main class="shell">
+    <div class="library-layout">
+      <aside class="books-panel" aria-label="کتب کی فہرست">
+        <div class="books-panel-head">
+          <h2 class="books-panel-title">کتب</h2>
+          <p id="booksPanelCount" class="books-panel-count"></p>
+        </div>
+        <label class="sr-only" for="bookFilter">کتابوں کے نام میں تلاش</label>
+        <input
+          id="bookFilter"
+          class="books-panel-filter"
+          type="search"
+          placeholder="کتاب کے نام میں تلاش کریں..."
+          autocomplete="off"
+        >
+        <div class="books-panel-actions">
+          <p id="booksSelectedCount" class="books-selected-count">کوئی کتاب منتخب نہیں — تمام کتب میں تلاش</p>
+          <button id="clearBookSelection" type="button" class="books-clear-btn hidden">انتخاب صاف کریں</button>
+        </div>
+        <div id="bookList" class="books-panel-list" role="listbox" aria-label="کتب کی فہرست"></div>
+      </aside>
+
+      <section class="card">
+      <header class="library-header">
+        <div class="library-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 8h12v32H12a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z" fill="currentColor" opacity="0.9"/>
+            <path d="M26 8h12a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H26V8Z" fill="currentColor" opacity="0.65"/>
+            <path d="M22 8v32" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+            <path d="M14 14h6M30 14h6M14 20h6M30 20h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+          </svg>
+        </div>
+        <div class="library-header-text">
+          <h1>المكتبة الرونق</h1>
+          <p class="library-memorial">
+            <span class="library-memorial__badge">تخليدًا لذكرى السيد <span class="library-memorial__name">رونق علي</span></span>
+          </p>
+        </div>
+      </header>
+
+      <div class="card-body">
+      <div class="intro-block">
+        <p class="intro">
+          دائیں فہرست سے ایک یا زیادہ کتابیں منتخب کریں تاکہ نتائج محدود ہوں؛ بغیر انتخاب کے تمام کتب میں تلاش ہوگی۔
+          کتاب کا عنوان دبائیں تو وہ کھل جائے گی۔
+        </p>
+        <ul class="guidance-list">
+          <li><strong>لفظی تلاش:</strong> ایک لفظ لکھیں — جیسے الصلاة یا التوبة۔</li>
+          <li><strong>سیاق و سباق:</strong> دو تین الفاظ، ایک سطر، یا چھوٹا پیرا لکھیں۔ تلاش ان الفاظ کو <em>ایک ہی صفحے</em> پر یا <em>قریبی صفحے (±1)</em> پر ڈھونڈے گی اور نمایاں کرے گی۔</li>
+        </ul>
+      </div>
+
+      <form id="searchForm" class="search-form">
+        <div class="search-field">
+          <label class="search-label" for="query">لفظی تلاش</label>
+          <input
+            id="query"
+            name="q"
+            type="search"
+            placeholder="مثال: الصلاة، التوبة، الجنة..."
+            autocomplete="off"
+          >
+          <p class="search-note">ایک لفظ کے لیے بہترین۔ خالی چھوڑیں اگر صرف سیاق و سباق استعمال کر رہے ہوں۔</p>
+        </div>
+
+        <div class="search-field search-field--context">
+          <label class="search-label" for="contextQuery">سیاق و سباق کی تلاش</label>
+          <textarea
+            id="contextQuery"
+            name="context"
+            rows="3"
+            placeholder="مثال: صلاة الجمعة في المسجد — یا دو تین الفاظ / ایک سطر / چھوٹا پیرا..."
+          ></textarea>
+          <p class="search-note">الفاظ ایک صفحے پر ہوں یا اگلے/پچھلے صفحے پر ہوں تو بھی نتیجہ ملے گا۔ لمبے پیراگراف میں اہم الفاظ خود چُن لیے جاتے ہیں۔</p>
+        </div>
+
+        <div class="search-actions">
+          <button id="searchBtn" type="submit">تلاش کریں</button>
+        </div>
+      </form>
+
+      <p id="status" class="status">اوپر تلاش کا خانہ بھریں، پھر «تلاش کریں» دبائیں۔</p>
+
+      <div id="searchView">
+        <div id="results" class="results" aria-live="polite"></div>
+      </div>
+
+      <section id="readerView" class="reader hidden" aria-live="polite">
+        <div class="reader-toolbar">
+          <button id="readerBack" type="button" class="reader-back">نتائج پر واپس</button>
+          <div id="readerBookMetaRow" class="reader-book-meta-row hidden">
+            <p id="readerBookTitle" class="reader-book-meta"></p>
+            <button id="citationBtn" type="button" class="citation-btn" title="کتاب، جلد اور صفحہ حوالہ کاپی کریں">حوالہ</button>
+          </div>
+          <div class="reader-nav">
+            <button id="readerPrev" type="button" class="reader-nav-btn reader-nav-main" aria-label="پچھلا صفحہ">
+              <span class="reader-nav-arrow">›</span>
+              <span class="reader-nav-label">پچھلا صفحہ</span>
+              <span id="readerPrevNo" class="reader-nav-page"></span>
+            </button>
+
+            <div class="reader-page-center">
+              <label class="sr-only" for="readerPageSlider">صفحات کے درمیان تیز منتقل</label>
+              <input id="readerPageSlider" class="reader-slider" type="range">
+              <div class="reader-page-display">
+                <span class="reader-page-label">صفحہ</span>
+                <input id="readerPageInput" class="reader-page-input" type="number" min="1" inputmode="numeric">
+                <span id="readerPageMax" class="reader-page-max">از —</span>
+              </div>
+            </div>
+
+            <button id="readerNext" type="button" class="reader-nav-btn reader-nav-main" aria-label="اگلا صفحہ">
+              <span class="reader-nav-arrow">‹</span>
+              <span class="reader-nav-label">اگلا صفحہ</span>
+              <span id="readerNextNo" class="reader-nav-page"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="reader-stage">
+          <button id="readerEdgePrev" type="button" class="reader-edge reader-edge-prev" aria-label="پچھلا صفحہ" title="پچھلا صفحہ">›</button>
+          <article id="readerBody" class="reader-body"></article>
+          <button id="readerEdgeNext" type="button" class="reader-edge reader-edge-next" aria-label="اگلا صفحہ" title="اگلا صفحہ">‹</button>
+        </div>
+      </section>
+      </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="ronaq.js"></script>
+</body>
+</html>
